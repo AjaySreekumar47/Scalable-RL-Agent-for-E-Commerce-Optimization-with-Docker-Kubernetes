@@ -1,6 +1,7 @@
 # Phase 0 Primer — Dynamic Pricing RL (Beginner-Friendly)
 
 This one-pager gives you a plain-English mental model of **dynamic pricing** and **reinforcement learning (RL)** before we write any code. 
+
 ---
 
 ## 1) What problem are we solving? (Dynamic Pricing)
@@ -21,6 +22,22 @@ You run an online store. Each day you can tweak the **price** of a product. Chan
 An **agent** (our pricing policy) repeatedly interacts with an **environment** (the marketplace). The agent observes the **state**, chooses an **action** (e.g., +1% price), gets a **reward** (profit), and the environment **transitions** to a new state. Over many episodes, the agent learns a policy that maximizes **expected cumulative reward**.
 
 ### RL Loop (at a glance)
+```mermaid
+flowchart LR
+  subgraph ENV[Environment]
+    S((State)) --> O[Observation]
+    A2{{Action}} --> T[Transition]
+    T --> S2((Next State))
+    R((Reward))
+  end
+
+  subgraph AGENT[Agent]
+    O --> P[Policy]
+    P --> A2
+    R --> L[Learn / Update]
+    L --> P
+  end
+```
 ```mermaid
 flowchart LR
   subgraph Env[Environment]
@@ -101,6 +118,12 @@ units_sold(t) = clamp_by_inventory(
 Where `comp_adjustment` down-weights demand if your price exceeds the competitor’s.
 
 ### Conceptual demand & profit (not to scale)
+```mermaid
+flowchart LR
+  LP[Low Price] --> R1[High Units / Low Margin]
+  MP[Mid Price] --> R2[Balanced Units & Margin]
+  HP[High Price] --> R3[Low Units / High Margin]
+```
 ```mermaid
 flowchart LR
     subgraph Demand_vs_Price

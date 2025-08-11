@@ -1,6 +1,6 @@
 # Phase 0 Primer — Dynamic Pricing RL (Beginner-Friendly)
 
-This one-pager gives you a plain-English mental model of **dynamic pricing** and **reinforcement learning (RL)** before we write any code. 
+This one-pager gives you a plain-English mental model of **dynamic pricing** and **reinforcement learning (RL)** before we write any code. It includes simple diagrams (Mermaid) that render directly on GitHub.
 
 ---
 
@@ -22,58 +22,8 @@ You run an online store. Each day you can tweak the **price** of a product. Chan
 An **agent** (our pricing policy) repeatedly interacts with an **environment** (the marketplace). The agent observes the **state**, chooses an **action** (e.g., +1% price), gets a **reward** (profit), and the environment **transitions** to a new state. Over many episodes, the agent learns a policy that maximizes **expected cumulative reward**.
 
 ### RL Loop (at a glance)
-```mermaid
-flowchart LR
-  subgraph ENV[Environment]
-    S((State)) --> O[Observation]
-    A2{{Action}} --> T[Transition]
-    T --> S2((Next State))
-    R((Reward))
-  end
 
-  subgraph AGENT[Agent]
-    O --> P[Policy]
-    P --> A2
-    R --> L[Learn / Update]
-    L --> P
-  end
-```
-```mermaid
-flowchart LR
-  subgraph Env[Environment]
-    S((State)) --> O[Observation]
-    A2{{Action}} --> T[Transition]
-    T --> S2((Next State))
-    R((Reward)):::reward
-  end
 
-  subgraph Agent
-    O --> P[Policy π(a&#124;s)]
-    P --> A2
-    R --> L[Learn / Update]
-    L --> P
-  end
-
-  classDef reward fill:#fff3cd,stroke:#e0a800,color:#000;
-```
-```mermaid
-flowchart LR
-    subgraph Environment
-      S[(State)] -->|reveals| O[Observation]
-      A{Action from Agent} --> T[Transition]
-      T --> S2[(Next State)]
-      R((Reward)):::reward
-    end
-
-    subgraph Agent
-      O --> P[Policy π(a|s)]
-      P --> A
-      A -->|to env| Environment
-      R -->|learn from| Agent
-    end
-
-    classDef reward fill:#fff3cd,stroke:#e0a800,color:#000;
-```
 
 **Translation:** Agent sees the world, picks a price move, earns profit, and updates its brain.
 
@@ -126,13 +76,19 @@ flowchart LR
 ```
 ```mermaid
 flowchart LR
-    subgraph Demand_vs_Price
-      P1[Low Price] -->|High Units / Low Margin| R1[Revenue]
-      P2[Mid Price] -->|Balanced Units & Margin| R2[Revenue (Often Best)]:::best
-      P3[High Price] -->|Low Units / High Margin| R3[Revenue]
-    end
+  subgraph ENV[Environment]
+    S((State)) --> O[Observation]
+    A2{{Action}} --> T[Transition]
+    T --> S2((Next State))
+    R((Reward))
+  end
 
-    classDef best fill:#e8f5e9,stroke:#43a047,color:#1b5e20;
+  subgraph AGENT[Agent]
+    O --> P[Policy]
+    P --> A2
+    R --> L[Learn / Update]
+    L --> P
+  end
 ```
 *(We’ll plot real curves in Phase 1.)*
 
